@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'PageSlider', :exclusive => true do
+  pod "PageSlider", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "PageSlider", :path => "../"
+
+  pod 'Specta'
+  pod 'Expecta'
+end
