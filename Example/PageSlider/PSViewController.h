@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PageSlider.h"
 
-@interface PSViewController : UIViewController
+@interface PSViewController : UIViewController <PageSliderDataSource>
 
 @end

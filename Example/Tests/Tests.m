@@ -6,39 +6,28 @@
 //  Copyright (c) 2014 Chris Johnson Bidler. All rights reserved.
 //
 
-SpecBegin(InitialSpecs)
+#import "PageSlider.h"
+#import "PSViewController.h"
 
-describe(@"these will fail", ^{
 
-    it(@"can do maths", ^{
-        expect(1).to.equal(2);
-    });
 
-    it(@"can read", ^{
-        expect(@"number").to.equal(@"string");
-    });
-    
-    it(@"will wait for 10 seconds and fail", ^{
-        waitUntil(^(DoneCallback done) {
-        
-        });
-    });
-});
+SpecBegin(PageSliderDataSource)
 
-describe(@"these will pass", ^{
-    
-    it(@"can do maths", ^{
-        expect(1).beLessThan(23);
-    });
-    
-    it(@"can read", ^{
-        expect(@"team").toNot.contain(@"I");
-    });
-    
-    it(@"will wait and succeed", ^{
-        waitUntil(^(DoneCallback done) {
-            done();
-        });
+describe(@"DataSource", ^{
+    it(@"Can create an NSNotification when prompted for data", ^{
+        [[NSNotificationCenter defaultCenter]
+         addObserverForName:@""
+         object:nil
+         queue:nil usingBlock:^(NSNotification *note) {
+             expect(note).toNot.beNil;
+             expect(note).to.beMemberOf([NSDictionary class]);
+             NSDictionary *dictionary = (NSDictionary *)note;
+             expect([dictionary objectForKey:@"payload"]).to.beMemberOf([NSArray class]);
+             expect([dictionary objectForKey:@"shouldReset"]).to.equal(@"YES");
+         }];
+        id<PageSliderDataSource> dataSource = [[PSViewController alloc] init];
+        [dataSource scrollCursorDidReachEndOfData];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
     });
 });
 

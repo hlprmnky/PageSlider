@@ -1,9 +1,14 @@
 # PageSlider
 
+# Not yet building in Travis or available in Cocoapods
+## I will be adding more tests and filling out the example app before submitting to Cocoapods
+
+<!--
 [![CI Status](http://img.shields.io/travis/Chris Johnson Bidler/PageSlider.svg?style=flat)](https://travis-ci.org/Chris Johnson Bidler/PageSlider)
 [![Version](https://img.shields.io/cocoapods/v/PageSlider.svg?style=flat)](http://cocoapods.org/pods/PageSlider)
 [![License](https://img.shields.io/cocoapods/l/PageSlider.svg?style=flat)](http://cocoapods.org/pods/PageSlider)
 [![Platform](https://img.shields.io/cocoapods/p/PageSlider.svg?style=flat)](http://cocoapods.org/pods/PageSlider)
+-->
 
 ## Usage
 

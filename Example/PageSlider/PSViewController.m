@@ -10,6 +10,9 @@
 
 @interface PSViewController ()
 
+// Data to send along to the PageSlider
+@property(nonatomic, strong) NSMutableArray *data;
+
 @end
 
 @implementation PSViewController
@@ -24,6 +27,23 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(NSMutableArray *)data {
+    if (! _data) {
+        _data = [[NSMutableArray alloc] init];
+    }
+    return _data;
+}
+
+#pragma mark PageSliderDataSource
+- (void)scrollCursorDidReachEndOfData {
+    NSDictionary *message = @{@"shouldReset": @"YES", @"payload": [self.data copy]};
+    [[NSNotificationCenter defaultCenter] postNotificationName:PageSliderModelUpdateNotification object:self userInfo:message];
+}
+
+- (void)resetData {
+    [self.data removeAllObjects];
 }
 
 @end
