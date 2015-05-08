@@ -15,18 +15,24 @@ SpecBegin(PageSliderDataSource)
 
 describe(@"DataSource", ^{
     it(@"Can create an NSNotification when prompted for data", ^{
-        [[NSNotificationCenter defaultCenter]
-         addObserverForName:@""
-         object:nil
-         queue:nil usingBlock:^(NSNotification *note) {
-             expect(note).toNot.beNil;
-             expect(note).to.beMemberOf([NSDictionary class]);
-             NSDictionary *dictionary = (NSDictionary *)note;
-             expect([dictionary objectForKey:@"payload"]).to.beMemberOf([NSArray class]);
-             expect([dictionary objectForKey:@"shouldReset"]).to.equal(@"YES");
-         }];
-        id<PageSliderDataSource> dataSource = [[PSViewController alloc] init];
-        [dataSource scrollCursorDidReachEndOfData];
+        waitUntil(^(DoneCallback done) {
+            DoneCallback doneNotify = done;
+            [[NSNotificationCenter defaultCenter]
+             addObserverForName:PageSliderModelUpdateNotification
+             object:nil
+             queue:nil
+             usingBlock:^(NSNotification *note) {
+                 id object = note.object;
+                 expect(object).toNot.beNil;
+                 expect(object).to.beKindOf([NSDictionary class]);
+                 NSDictionary *dictionary = (NSDictionary *)note.object;
+                 expect([dictionary objectForKey:@"payload"]).to.beKindOf([NSArray class]);
+                 expect([dictionary objectForKey:@"shouldReset"]).to.equal(@"YES");
+                 doneNotify();
+             }];
+            id<PageSliderDataSource> dataSource = [[PSViewController alloc] init];
+            [dataSource scrollCursorDidReachEndOfData];
+        });
         [[NSNotificationCenter defaultCenter] removeObserver:self];
     });
 });

@@ -39,7 +39,7 @@
 #pragma mark PageSliderDataSource
 - (void)scrollCursorDidReachEndOfData {
     NSDictionary *message = @{@"shouldReset": @"YES", @"payload": [self.data copy]};
-    [[NSNotificationCenter defaultCenter] postNotificationName:PageSliderModelUpdateNotification object:self userInfo:message];
+    [[NSNotificationCenter defaultCenter] postNotificationName:PageSliderModelUpdateNotification object:message userInfo:nil];
 }
 
 - (void)resetData {
